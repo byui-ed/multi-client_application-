@@ -1,77 +1,92 @@
-# multi-client_application-
+# multi-client_application- (Multi-Client Python Networking Application)
 # Overview
 
-{Important!  Do not say in this section that this is college assignment.  Talk about what you are trying to accomplish as a software engineer to further your learning.}
+As a software engineer, my goal with this project was to deepen my understanding of low-level network protocols, socket programming, and concurrent connection management in Python. Building networking tools from scratch allows me to master how distributed systems communicate, handle state, and manage data serialization over raw TCP connections.
 
-{Provide a description the networking program that you wrote. Describe how to use your software.  If you did Client/Server, then you will need to describe how to start both.}
+This project consists of a multi-threaded TCP Client-Server networking application. The Server operates continuously to accept multiple incoming client socket connections, processing commands sequentially per thread. The Client provides an interactive command-line interface that allows users to send structured requests to the server and receive formatted responses in real time.
 
-{Describe your purpose for writing this software.}
+How to Run the Software
+Start the Server:
 
-{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running (you will need to show two pieces of software running and communicating with each other) and a walkthrough of the code.}
+Open a terminal or IDE prompt and navigate to the project root.
 
-[Software Demo Video](# multi-client_application-
-# Overview
+Run the server script first:
 
-{Important!  Do not say in this section that this is college assignment.  Talk about what you are trying to accomplish as a software engineer to further your learning.}
+Bash
+python server.py
+The server will initialize and begin listening on 127.0.0.1:65432.
 
-{Provide a description the networking program that you wrote. Describe how to use your software.  If you did Client/Server, then you will need to describe how to start both.}
+Start the Client(s):
 
-{Describe your purpose for writing this software.}
+Open a separate terminal window (or multiple terminal windows to test concurrent multi-client support).
 
-{Provide a link to your YouTube demonstration.  It should be a 4-5 minute demo of the software running (you will need to show two pieces of software running and communicating with each other) and a walkthrough of the code.}
+Run the client script:
+
+Bash
+python client.py
+Once connected, type any supported command into the prompt (TIME, ECHO <msg>, or STATS).
+
+Type EXIT or QUIT to safely terminate the client connection.
+
+Purpose
+The purpose of writing this software is to gain hands-on experience with:
+
+Establishing persistent network socket connections using standard network protocols.
+
+Implementing multi-threading on the server side to handle multiple client sessions concurrently without blocking execution.
+
+Building command parsing logic and error handling for socket communications.
 
 [Software Demo Video](https://youtu.be/6hq06tOnwbc)
 
 # Network Communication
 
-{Describe the architecture that you used (client/server or peer-to-peer)}
+Architecture
+This application follows a Client-Server Architecture. The server acts as a centralized host that listens for incoming connection requests on a dedicated port. Upon connection, the server spawns a dedicated daemon thread for each client, maintaining isolated communication streams while sharing thread-safe global server metrics.
 
-{Identify if you are using TCP or UDP and what port numbers are used.}
+Protocol and Ports
+Protocol: TCP (Transmission Control Protocol) using socket.SOCK_STREAM.
 
-{Identify the format of messages being sent between the client and server or the messages sent between two peers.}
+IP Address: 127.0.0.1 (Localhost).
+
+Port: 65432 (Non-privileged high port).
+
+Message Format
+Communication occurs over UTF-8 encoded text payloads:
+
+Client Requests: Plain text string commands sent over the TCP stream (TIME, ECHO <msg>, or STATS).
+
+Server Responses: Formatted string messages returned to the client containing timestamps, transformed text with length metadata, or formatted uptime and request count statistics.
 
 # Development Environment
 
-{Describe the tools that you used to develop the software}
+Tools & IDE
+PyCharm (Community/Professional Edition) as the primary Integrated Development Environment.
 
-{Describe the programming language that you used and any libraries.}
+Git & GitHub for version control and source code management.
+
+Language & Libraries
+Language: Python 3.x
+
+Standard Libraries:
+
+socket: Low-level networking interface for creating TCP sockets.
+
+threading: Concurrent thread execution and lock synchronization (threading.Lock) for safe multi-client request counting.
+
+datetime & time: Server runtime metrics and timestamp generation.
 
 # Useful Websites
 
 {Make a list of websites that you found helpful in this project}
-* [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
+* [Web Site Name](https://docs.python.org/3/library/socket.html?utm_source=gemini)
+* [Web Site Name](https://realpython.com/python-sockets/?utm_source=gemini)
+* [Web Site Name](https://docs.python.org/3/library/threading.html?utm_source=gemini)
 
 # Future Work
+JSON Payload Serialization: Upgrade string message passing to structured JSON payloads for extensible request/response objects.
 
-{Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
-* Item 2
-* Item 3)
+Authentication & TLS Encryption: Add SSL/TLS wrappers to secure socket communication between client and server.
 
-# Network Communication
+Graceful Server Shutdown: Implement keyboard interrupt listeners (Ctrl+C) on the server to safely close all active client threads and open sockets before terminating.
 
-{Describe the architecture that you used (client/server or peer-to-peer)}
-
-{Identify if you are using TCP or UDP and what port numbers are used.}
-
-{Identify the format of messages being sent between the client and server or the messages sent between two peers.}
-
-# Development Environment
-
-{Describe the tools that you used to develop the software}
-
-{Describe the programming language that you used and any libraries.}
-
-# Useful Websites
-
-{Make a list of websites that you found helpful in this project}
-* [Web Site Name](http://url.link.goes.here)
-* [Web Site Name](http://url.link.goes.here)
-
-# Future Work
-
-{Make a list of things that you need to fix, improve, and add in the future.}
-* Item 1
-* Item 2
-* Item 3
